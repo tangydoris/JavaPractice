@@ -41,6 +41,7 @@ public class Practice {
 		return false;
 	}
 
+
 	/*
 	Write  a  function  to  remove  a  single  occurrence  of  an  integer  from  a  doubly  linked 
 	list  if  it  is  present. 
@@ -156,6 +157,7 @@ public class Practice {
 			list.add((ArrayList<ArrayList>)newList.get(i).clone());
 	}
 
+
 	/*
 	Reverse a LinkedList
 	*/
@@ -251,32 +253,100 @@ public class Practice {
 	You can take either one step steps or two step steps; 
 	how many ways can you climb the stairs?
 	*/
+	/*
+	To go up a staircase of 0 steps, you take 0 steps. That is 1 way.
+	For a staircase of 1 step, you take 1 step. That is 1 way.
+
+	For however many steps (n) here on out, you can take 1 step to begin with
+	and the rest of the problem is an n-1 problem.
+	You can take 2 steps to begin with and the rest of the problem is an n-2 problem.
+
+	This is the Fibonacci sequece!
+	The number of ways to climb an N-steps staircase is the (N+1)th Fibonacci number
+	where Fib(0)=0 and Fib(1)=1.
+	*/
 
 
 	/*
 	Find the length of the longest chain of consecutive integers
 	in an unsorted set in linear time
+
+	I'll assume that the input ArrayList is already a set
 	*/
+	public static int findLongestConsecutiveChain (ArrayList<Integer> set) {
+		/*
+		Game Plan: iterate through input set
+		When the next number if 1 greater than the current number, increment counter (ans)
+		If not, then reset counter
+		*/
+
+		// Empty input set
+		if (set.size() == 0)
+			return 0;
+
+		int longestStreak = 1;
+		int ans = 1;
+		for (int i = 0; i < set.size()-1; i++) {
+			// If the next number is consecute to the one at this index, increment counter
+			if (set.get(i+1) == (set.get(i)+1))
+				ans++;
+
+			// If the next number breaks consecutive chain
+			else
+				if (ans > longestStreak)
+					longestStreak = ans;
+				else
+					ans = 1;
+		}
+
+		return longestStreak;
+	}
 
 
 	/*
 	Write a function to return the longest common prefix between two strings
 	*/
+	public static String longestCommonPrefix (String str1, String str2) {
+		/*
+		Game Plan: Look at the characters in each string starting from the beginning
+		Compare the characters
+		Once the characters don't match, end program because there is no need to look
+		at the rest of the strings
+
+		If either string is empty, return an empty string
+		*/
+
+		String ans = "";
+		if (str1.length()==0 || str2.length()==0)
+			return ans;
+
+		for (int i = 0; i < str1.length() && i < str2.length(); i++) {
+			// I use == instead of .equals() because char is primitive
+			if (str1.charAt(i) == str2.charAt(i))
+				ans += str1.charAt(i);
+			else
+				break;
+		}
+
+		return ans;
+	}
 
 
 	public static void main (String[] args) {
-		// check isSubString()
+		System.out.println(" ");
+
+		// test isSubString()
 		String subStr = "que";
 		String subStr2 = "cat";
 		String str = "baroque";
 		System.out.println(subStr+" is a substring of "+str+":\t"+isSubstring(subStr, str));
 		System.out.println(subStr2+" is a substring of "+str+":\t"+isSubstring(subStr2, str));
 	
-		// check removeRepeatedChars
+		// test removeRepeatedChars
 		String str2 = "aaabbbbbbbcdefeaawepewvdsk;kjjkdfddd";
 		System.out.println("Remove repeated characters in "+str2+":\t"+removeRepeatedChars(str2));
 
-		// check allPossibleSubsets
+		// test allPossibleSubsets
 		ArrayList<Integer> intArray = new ArrayList<Integer>();
 		intArray.add(1);
 		intArray.add(2);
@@ -286,11 +356,27 @@ public class Practice {
 		System.out.println("All subsets of "+intArray2+":\t"+allPossibleSubsets(intArray2));
 		System.out.println("All subsets of "+intArray+":\t"+allPossibleSubsets(intArray));
 
+		// test reverseLinkedList
 		LinkedList<Integer> emptyLinkedList = new LinkedList<Integer>();
 		LinkedList<Integer> linkedList = new LinkedList<Integer>();
 		for (int i = 0; i < 21; i += 5)
 			linkedList.add(i);
 		System.out.println("Reverse "+emptyLinkedList+":\t"+reverseLinkedList(emptyLinkedList));
 		System.out.println("Reverse "+linkedList+":\t"+reverseLinkedList(linkedList));
+
+		// test findLongestConsecutiveChain
+		intArray.add(8);
+		intArray.add(9);
+		intArray.add(3);
+		System.out.println("Longest streak of consecutive integers in "+intArray2+":\t"
+				+findLongestConsecutiveChain(intArray2));
+		System.out.println("Longest streak of consecutive integers in "+intArray+":\t"
+				+findLongestConsecutiveChain(intArray));
+
+		// test longestCommonPrefix
+		String str1 = "baronesque";
+		String str3 = "";
+		System.out.println("Longest common prefix of "+str3+" and "+str1+":\t"+longestCommonPrefix(str3, str1));
+		System.out.println("Longest common prefix of "+str+" and "+str1+":\t"+longestCommonPrefix(str, str1));
 	}
 }

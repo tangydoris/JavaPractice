@@ -195,6 +195,57 @@ public class Practice {
 		return ans;
 	}
 
+
+	/*
+	Write an algorithm to insert a new value into a circular sorted linked list
+	Commenting this function out because there is no CircularLinkedList in the Java library
+	and I don't feel like implementing it haha
+
+	Doesn't have a return value: the input list in memory is modified
+	*/
+	
+	// public static void insertIntoCircularLinkedList (CircularLinkedList<Integer> list, int x) {
+		/*
+		Game Plan: Start searching for x's appropriate position at index 0
+		(which may or may not be the least/greatest element, we don't know)
+		If x is greater than the value, we move over one direction
+		If x is smaller than the value, we move over in the other direction
+		We have found x's position when x is between two neighboring values
+		We modify the list to insert x
+
+		How do we know which direction to go in?
+		I'll assume going with the direction of the node pointers is toward larger numbers
+
+		What happens when we try to insert into a list with one element?
+		An empty list?
+		*/
+
+		// Empty input list
+		/*
+		if (list.size() == 0)
+			list.add(new CircularLinkedListNode<Integer>(x);
+
+		CircularLinkedListNode<Integer> currentNode = list.get(0);
+		CircularLinkedListNode<Integer> newNode = new CircularLinkedListNode<Integer>(x);
+		// Input list with one element
+		if (list.size() == 1) {
+			currentNode.setNext(newNode);
+			newNode.setNext(currentNode);
+		}
+
+		Circulat LinkedListNode<Integer> nextNode = currentNode.getNext();
+		while (!(x >= currentNode.getValue() x < nextNode.getValue())) {
+			currentNode = nextNode;
+			nextNode = nextNode.getNext();
+		}
+
+		currentNode.setNext(newNode);
+		newNode.setNext(nextNode);
+		*/
+	// }
+
+
+
 	/*
 	You have stairs with N number of steps
 	You can take either one step steps or two step steps; 
@@ -209,23 +260,8 @@ public class Practice {
 
 
 	/*
-	Write an algorithm to insert a new value into a circular sorted linked list
-	Commenting this function out because there is no CircularLinkedList in the Java library
-	and I don't feel like implementing it haha
+	Write a function to return the longest common prefix between two strings
 	*/
-	public static void insertIntoCircularLinkedList (CircularLinkedList<Integer> list, int x) {
-		/*
-		Game Plan: Start searching for x's appropriate position at index 0
-		(which may or may not be the least/greatest element, we don't know)
-		If x is greater than the value, we move over one direction
-		If x is smaller than the value, we move over in the other direction
-		We have found x's position when x is between two neighboring values
-		We modify the list to insert x
-		*/
-
-		Integer currentNode = list.get(0);
-		while (x)
-	}
 
 
 	public static void main (String[] args) {

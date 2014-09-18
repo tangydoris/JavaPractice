@@ -332,6 +332,105 @@ public class Practice {
 	}
 
 
+	/*
+	Reverse word order in a String
+	*/
+	public static String reverseWordOrder (String str) {
+		/*
+		Game Plan: Keep two index trackers on the string
+		One tracker stays at the beginning of a word (after a space)
+		The other tracker moves to toward the end of the word (before a space)
+		Push that string onto a stack
+		Pop each string off the stack and append to output string with a space in between
+		*/
+
+		// For an empty input string, return empty string
+		if (str.length() == 0)
+			return "";
+
+		Stack<String> stack = new Stack<String>();
+		String ans = "";
+
+		for (int i = 0; i < str.length(); ) {
+			int j = i;
+
+			// Ascii value of space (" ") is 32
+			while (!((int)str.charAt(j) == 32) && (j < str.length()-1)) {
+				j++;
+			}
+
+			if (j == str.length()-1)
+				j++;
+
+			stack.push(str.substring(i, j));
+			i = j+1;
+		}
+
+		while(stack.size() > 1)
+			ans += stack.pop() + " ";
+		// Add final element in stack without a space after it
+		ans += stack.pop();
+
+		return ans;
+	}
+
+
+	/*
+	Count number of set bits in integer
+	*/
+	/*
+	
+	*/
+
+
+	/*
+	the input was a string and output the longest sub string with only 2
+	distinct chars in the sub string
+	*/
+	public static String longestSubstringTwoChars (String str) {
+		/*
+		Game Plan: iterate through string, until there's a different char,
+		then continue iterating until there's a third char.
+		record length/string. move onto next char
+		*/
+
+		String ans = "";
+		int longestLength = 0;
+		// Return "" for empty input string
+		if (str.length() == 0)
+			return ans;
+
+		// What happens to an input string "aaa" ?
+		// Return "aaa"
+		
+		for (int i = 0; i < str.length(); i++) {
+			// Another index for the end of the substring we're looking at
+			int j = i+1;
+			char firstChar = str.charAt(i);
+			// We keep moving j over until it hits the second character
+			while (j < str.length()-1 && firstChar == str.charAt(j))
+				j++;	
+
+			// We've hit the second character
+			char secondChar = str.charAt(j);
+			// Time to find the third character
+			int k = j+1;
+			while (k < str.length()-1 && secondChar == str.charAt(k))
+				k++;
+
+			// We've hit the third character
+			// Store the substring from first character to where the second one ends
+			if ((k-i) > longestLength) {
+				ans = str.substring(i, k);
+				longestLength = ans.length();
+			}
+			i = j;
+		}
+		return ans;	
+	}
+		
+
+
 	public static void main (String[] args) {
 		System.out.println(" ");
 
@@ -343,7 +442,7 @@ public class Practice {
 		System.out.println(subStr2+" is a substring of "+str+":\t"+isSubstring(subStr2, str));
 	
 		// test removeRepeatedChars
-		String str2 = "aaabbbbbbbcdefeaawepewvdsk;kjjkdfddd";
+		String str2 = "dddaaabbbbbbbcdefeaawepewvdsk;kjjkdfddd";
 		System.out.println("Remove repeated characters in "+str2+":\t"+removeRepeatedChars(str2));
 
 		// test allPossibleSubsets
@@ -378,5 +477,16 @@ public class Practice {
 		String str3 = "";
 		System.out.println("Longest common prefix of "+str3+" and "+str1+":\t"+longestCommonPrefix(str3, str1));
 		System.out.println("Longest common prefix of "+str+" and "+str1+":\t"+longestCommonPrefix(str, str1));
+	
+		// test reverseWordOrder
+		String words = "I am very happy today";
+		System.out.println("Reverse word order of "+str3+":\t"+reverseWordOrder(str3));
+		System.out.println("Reverse word order of "+words+":\t"+reverseWordOrder(words));
+
+		// test longestSubstringTwoChars
+		String str4 = "aa";
+		System.out.println("Longest substring with two distinct characters of "+str3+":\t"+longestSubstringTwoChars(str3));
+		System.out.println("Longest substring with two distinct characters of "+str2+":\t"+longestSubstringTwoChars(str2));
+		System.out.println("Longest substring with two distinct characters of "+str4+":\t"+longestSubstringTwoChars(str4));
 	}
 }

@@ -1,5 +1,4 @@
 import java.util.*;
-import java.math.*;
 
 /*
 Given the radius, generate a random point inside the circle

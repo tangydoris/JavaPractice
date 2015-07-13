@@ -108,7 +108,7 @@ public class Practice {
 	/*
 	Given a list/set of whatever, return a list/array of all possible subsets
 	*/
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	public static ArrayList<ArrayList> allPossibleSubsets(ArrayList<Integer> list) {
 		/*
 		Game Plan: Return all sublists of sizes in range [1, input list length]
@@ -135,7 +135,7 @@ public class Practice {
 		if (list.isEmpty())
 			return ans;
 
-		ArrayList<ArrayList> listOfNewSubsets;
+		//ArrayList<ArrayList> listOfNewSubsets;
 
 		for (int i = 0; i < list.size(); i++) {
 			allPossibleSubsetsHelper(ans, list.get(i));

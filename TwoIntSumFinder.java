@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Hashtable;
 
-public class FindTwoIntSum {
+public class TwoIntSumFinder {
 	
 	/*
 	 * Given an array of integers & an integer find two numbers
@@ -62,8 +62,9 @@ public class FindTwoIntSum {
 	}
 
 	public static void main(String[] args) {
+		int[] a = {1,1,1,1,1,1,1,1,1,1,1,1};
 		findSumBySort(null, 5);
-		findSumByHash(null, 5);
+		findSumByHash(a, 5);
 	}
 
 }

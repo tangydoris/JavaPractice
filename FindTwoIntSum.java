@@ -3,8 +3,6 @@ import java.util.Hashtable;
 
 public class FindTwoIntSum {
 	
-	private int[] array;
-	
 	/*
 	 * Given an array of integers & an integer find two numbers
 	 * in the array such that they add up to the given integer.
@@ -13,18 +11,17 @@ public class FindTwoIntSum {
 	 * output = 4, 6.
 	 */
 	
-	public FindTwoIntSum(int[] array) {
-		this.array = array;
-	}
-	
-	// First method: sort then seek from two ends
-	public void findBySort(int sum) {
-		int[] copy = Arrays.copyOf(array, array.length);
-		Arrays.sort(copy);
+	public static void findSumBySort(int[] array, int sum) {
+		if (array == null || array.length == 0) {
+			System.out.println("unable to find sum");
+			return;
+		}
+		
+		Arrays.sort(array);
 		int i = 0;
-		int j = copy.length-1;
+		int j = array.length-1;
 		while (i < j) {
-			int tempSum = copy[i] + copy[j];
+			int tempSum = array[i] + array[j];
 			if (tempSum < sum) {
 				// needs to be larger, move left pointer
 				i++;
@@ -35,7 +32,7 @@ public class FindTwoIntSum {
 			}
 			else if (tempSum == sum) {
 				// we got it!
-				System.out.println(copy[i]+" + "+copy[j]+" = "+sum);
+				System.out.println(array[i]+" + "+array[j]+" = "+sum);
 				break;
 			}
 		}
@@ -44,7 +41,12 @@ public class FindTwoIntSum {
 	}
 	
 	// Second method: hash the complements of each value in the array
-	public void findByHash(int sum) {
+	public static void findSumByHash(int[] array, int sum) {
+		if (array == null || array.length == 0) {
+			System.out.println("unable to find sum");
+			return;
+		}
+		
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		for (int i = 0; i < array.length; i++) {
 			int comp = sum - array[i];
@@ -60,7 +62,8 @@ public class FindTwoIntSum {
 	}
 
 	public static void main(String[] args) {
-		
+		findSumBySort(null, 5);
+		findSumByHash(null, 5);
 	}
 
 }

@@ -11,10 +11,12 @@ public class OccurrenceFinder {
 	 * output = 2. 
 	 */
 	
-	private Hashtable<Integer, Integer> table;
 	
-	public OccurrenceFinder(int[] array) {
-		table = new Hashtable<Integer, Integer>();
+	public int getOccurrence(int[] array, int num) {
+		if (array == null || array.length == 0)
+			return 0;
+		
+		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		
 		// Hash number of occurrences to the occurring value
 		for (int i = 0; i < array.length; i++) {
@@ -24,11 +26,9 @@ public class OccurrenceFinder {
 			else
 				table.replace(x, table.get(x)+1);
 		}
-	}
-
-	public int findOccurrences(int x) {
-		if (table.containsKey(x))
-			return table.get(x);
+		
+		if (table.containsKey(num))
+			return table.get(num);
 		else
 			return 0;
 	}

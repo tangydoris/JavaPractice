@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 public class TwoIntSumFinder {
 	
@@ -10,6 +11,8 @@ public class TwoIntSumFinder {
 	 * a[] = {1,4,3,4,6,3,5}; K=10
 	 * output = 4, 6.
 	 */
+	
+	static Logger logger = Logger.getLogger("TwoIntSumFinder.class");
 	
 	public static void findSumBySort(int[] array, int sum) {
 		if (array == null || array.length == 0) {
@@ -49,44 +52,58 @@ public class TwoIntSumFinder {
 		
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		for (int i = 0; i < array.length; i++) {
+			
+			/*
+			 * If the sum is a large positive and one of the integers in the array
+			 * is a large negative, we could have a problem
+			 */
 			int comp = sum - array[i];
-			if (table.containsValue(array[i])) {
-				System.out.println(array[i]+" + "+comp+" = "+sum);
-				return;
+			int magA = Math.abs(array[i]);
+			int magSum = Math.abs(sum);
+			if (sum > 0) {
+				if (array[i] < 0 & comp < 0)
+					throwException();
+				else if (array[i] > 0) {
+					if (magA < sum & comp < 0)
+						throwException();
+					else if (Math.abs(array[i]) > sum & comp > 0)
+						throwException();
+				}
+			}
+			else if (sum >= 0) {
+				if (array[i] > 0 & comp > 0)
+					throwException();
+				else if (array[i] < 0) {
+					if (magA < magSum & comp > 0)
+						throwException();
+					if (magA > magSum & comp < 0)
+						throwException();
+				}
 			}
 			else {
-				table.put(array[i], comp);
+				if (table.containsValue(array[i])) {
+					System.out.println(array[i]+" + "+comp+" = "+sum);
+					return;
+				}
+				else {
+					table.put(array[i], comp);
+				}
 			}
+			
 		}
 		System.out.println("cannot find addends for "+sum);
 	}
 	
-	/*
-	public static X getObj(X x) {
-		 if(x==null)
-		 	x = new X();
-		 x.val = 2;
-		 return x;
+	public static void throwException() {
+		logger.severe("Maximum integer that can be supported reached");
+		throw new LargeNumberException("Maximum integer that can be supported reached");
 	}
-	*/
 	
 	public static void main(String[] args) {
-		
 		int[] a = {1,1,2,1,4,1,9,6,1,1,3,1};
 		findSumBySort(null, 5);
 		findSumByHash(a, 5);
-		
-		
-		/*
-		X x = null;
-		x = getObj(x);
-		System.out.println(x.val);
-		*/
 	}
 
 }
-
-/*
-class X {int val = 0;}
-*/
 

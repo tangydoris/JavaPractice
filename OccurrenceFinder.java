@@ -36,13 +36,11 @@ public class OccurrenceFinder {
 				if (!newTable.containsKey(x))
 					newTable.put(x, 1);
 				else {
-					if (newTable.get(x)+1 < 0)
+					if (newTable.get(x)+1 > 0)
 						newTable.put(x, newTable.get(x)+1);
 					else {
 						logger.severe("Maximum number of occurrences for integer reached");
-						
-						// **create my own exception that extends runtimeexception!
-						throw new RuntimeException("Maximum number of occurrences for integer reached");
+						throw new LargeNumberException("Maximum number of occurrences for integer reached");
 					}
 				}
 			}
@@ -61,6 +59,8 @@ public class OccurrenceFinder {
 		}
 	}
 	
+	
+	
 	public static void main(String[] args) {
 		int[] a1 = {1,1,2,4,5,2,35,52,2,3};
 		int[] a2 = {3,3,3,3,3,3,5};
@@ -69,3 +69,4 @@ public class OccurrenceFinder {
 		getOccurrence(a2, 3);
 	}
 }
+

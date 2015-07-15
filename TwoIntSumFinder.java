@@ -60,11 +60,33 @@ public class TwoIntSumFinder {
 		}
 		System.out.println("cannot find addends for "+sum);
 	}
-
+	
+	/*
+	public static X getObj(X x) {
+		 if(x==null)
+		 	x = new X();
+		 x.val = 2;
+		 return x;
+	}
+	*/
+	
 	public static void main(String[] args) {
-		int[] a = {1,1,1,1,1,1,1,1,1,1,1,1};
+		
+		int[] a = {1,1,2,1,4,1,9,6,1,1,3,1};
 		findSumBySort(null, 5);
 		findSumByHash(a, 5);
+		
+		
+		/*
+		X x = null;
+		x = getObj(x);
+		System.out.println(x.val);
+		*/
 	}
 
 }
+
+/*
+class X {int val = 0;}
+*/
+

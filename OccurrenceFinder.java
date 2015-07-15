@@ -1,4 +1,6 @@
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class OccurrenceFinder {
 	
@@ -11,29 +13,59 @@ public class OccurrenceFinder {
 	 * output = 2. 
 	 */
 	
+	// Hashtable is synchronized, slower (have to access the lock then unlock it)
+	// Always put interface in front
 	
-	public int getOccurrence(int[] array, int num) {
+	private static Map<int[], Map<Integer, Integer>> map = new HashMap<int[], Map<Integer, Integer>>();
+	static Logger logger = Logger.getLogger("OccurrenceFinder.class");
+	
+	public static int getOccurrence(int[] array, int num) {
+		if (array.length >= Math.pow(2, 64)) {
+			System.out.println("cannot handle array of that size");
+			return 0;
+		}
+		
 		if (array == null || array.length == 0)
 			return 0;
 		
-		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
-		
-		// Hash number of occurrences to the occurring value
-		for (int i = 0; i < array.length; i++) {
-			int x = array[i];
-			if (!table.containsKey(x))
-				table.put(x, 1);
-			else
-				table.replace(x, table.get(x)+1);
+		if (!map.containsKey(array)) {
+			Map<Integer, Integer> newTable = new HashMap<Integer, Integer>();
+			// Hash number of occurrences to the occurring value
+			for (int i = 0; i < array.length; i++) {
+				int x = array[i];
+				if (!newTable.containsKey(x))
+					newTable.put(x, 1);
+				else {
+					if (newTable.get(x)+1 < 0)
+						newTable.put(x, newTable.get(x)+1);
+					else {
+						logger.severe("Maximum number of occurrences for integer reached");
+						
+						// **create my own exception that extends runtimeexception!
+						throw new RuntimeException("Maximum number of occurrences for integer reached");
+					}
+				}
+			}
+			
+			map.put(array, newTable);
 		}
-		
-		if (table.containsKey(num))
+
+		Map<Integer, Integer> table = map.get(array);
+		if (table.containsKey(num)) {
+			System.out.println(table.get(num));
 			return table.get(num);
-		else
+		}
+		else {
+			System.out.println("0");
 			return 0;
+		}
 	}
 	
 	public static void main(String[] args) {
-		
+		int[] a1 = {1,1,2,4,5,2,35,52,2,3};
+		int[] a2 = {3,3,3,3,3,3,5};
+		getOccurrence(a1, 1);
+		getOccurrence(a1, 4);
+		getOccurrence(a2, 3);
 	}
 }

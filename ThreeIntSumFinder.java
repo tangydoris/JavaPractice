@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class ThreeIntSumFinder {
@@ -37,14 +38,14 @@ public class ThreeIntSumFinder {
 	
 	static Logger logger = Logger.getLogger("ThreeIntSumFinder.class");
 	
-	public static void findThreeAddends(int[] a, int s) {
+	public static int[] findThreeAddends(int[] a, int s) {
 		if (a == null) {
 			System.out.println("cannot find addends for null array");
-			return;
+			return null;
 		}
 		if (a.length < 3) {
 			System.out.println("array must contain at least three integers");
-			return;
+			return null;
 		}
 		
 		int lasti = a.length-1;
@@ -64,7 +65,7 @@ public class ThreeIntSumFinder {
 				if (a[i] > 0) {
 					// + ai, +aj
 					if (a[j] > 0) {
-						if (sumik < 0)
+						if (sumij < 0)
 							throwException();
 						// +ai, +aj, +ak
 						if (a[k] > 0) {
@@ -165,10 +166,39 @@ public class ThreeIntSumFinder {
 				else {
 					// we got it!
 					System.out.println(a[i]+" + "+a[j]+" + "+a[k]+" = "+s);
-					return;
+					return new int[] {a[i], a[j], a[k]};
 				}
 			}
 		}
+		return null;
+	}
+	
+	/*
+	 * Find integers that can make up the sides of a right triangle
+	 * Square all numbers in array
+	 */
+	public static int[] findPythagoreanTriplet(int[] a) {
+		for (int i = 0; i < a.length; i++)
+			a[i] *= a[i];
+		
+		int[] out = null;
+		for (int i = a.length-1; i > 1; i--) {
+			if (out != null)
+				break;
+			
+			int[] copy = Arrays.copyOf(a, a.length);
+			copy[i] *= -1;
+			out = findThreeAddends(copy, 0);
+		}
+		
+		if (out != null) {
+			for (int i = 0; i < out.length; i++) {
+				out[i] = Math.abs(out[i]);
+				out[i] = (int) Math.sqrt(out[i]);
+			}
+		}
+		System.out.println("pythagorean triplet: "+out[0]+", "+out[1]+", "+out[2]);
+		return out;
 	}
 	
 	public static void throwException() {
@@ -177,8 +207,9 @@ public class ThreeIntSumFinder {
 	}
 	
 	public static void main(String[] args) {
-		int[] a = {1,4,3,4,6,3,5};
-		findThreeAddends(a, 14);
+		int[] a = {1,4,3,4,6,3,5,9,10};
+		//findThreeAddends(a, 14);
+		findPythagoreanTriplet(a);
 	}
 
 }

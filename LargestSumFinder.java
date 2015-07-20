@@ -3,6 +3,7 @@ import java.util.logging.Logger;
 public class LargestSumFinder {
 
 	/*
+	 * #4
 	 * Find the sum of contiguous subarray within a one-dimensional array 
 	 * of numbers which has the largest sum.
 	 *
@@ -34,20 +35,23 @@ public class LargestSumFinder {
 	
 	public static int findLargestSum(int[] a) {
 		if (a == null) {
-			System.out.println("cannot find sum for null array");
-			return 0;
-		}
-		if (a.length == 0) {
-			System.out.println("0");
-			return 0;
+			logger.severe("cannot find sum for null array");
+			throw new IllegalArgumentException("cannot find sum for null array");
 		}
 		
+		// This check depends on the application
+		/*
+		if (a.length == 0) {
+			
+		}
+		*/
+		
 		int currentSum = 0;
-		int largestSum = 0;
+		int largestSum = Integer.MIN_VALUE;
 		
 		for (int i = 0; i < a.length; i ++) {
 			
-			if ((currentSum+a[i]) >= Math.pow(2, 64)-1) {
+			if (currentSum > 0 && a[i] > 0 && (currentSum+a[i]) < 0) {
 				logger.severe("Maximum integer sum that can be supported reached");
 				throw new LargeNumberException("Maximum integer sum that can be supported reached");
 			}

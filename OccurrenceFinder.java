@@ -6,6 +6,7 @@ public class OccurrenceFinder {
 	
 	
 	/*
+	 * #1
 	 * Given an array of integers & an integer find the number of occurrences 
 	 * of that integer and display the results.
 	 * 

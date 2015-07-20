@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 public class ThreeIntSumFinder {
 	
 	/*
+	 * #3
 	 * Given an array of integers & an integer find three numbers in the array 
 	 * such that they add up to the given integer.
 	 * 
@@ -39,14 +40,13 @@ public class ThreeIntSumFinder {
 	static Logger logger = Logger.getLogger("ThreeIntSumFinder.class");
 	
 	public static int[] findThreeAddends(int[] a, int s) {
-		if (a == null) {
-			System.out.println("cannot find addends for null array");
-			return null;
+		if (a == null || a.length < 3) {
+//			System.out.println("cannot find addends for null array");
+//			return null;
+			// log and throw exception
 		}
-		if (a.length < 3) {
-			System.out.println("array must contain at least three integers");
-			return null;
-		}
+		
+		Arrays.sort(a);
 		
 		int lasti = a.length-1;
 		for (int i = 0; i < lasti-1; i++) {
@@ -60,6 +60,16 @@ public class ThreeIntSumFinder {
 				int sumik = a[i] + a[k];
 				int sumjk = a[j] + a[k];
 				
+				if (a[i]>0 && a[j]>0 && a[k]>0) {
+					if (sum < 0)
+						throwException();
+				}
+				else if (a[i]<0 && a[j]<0 && a[k]<0) {
+					if (sum > 0)
+						throwException();
+				}
+				
+				/*
 				// test every possible case for negatives, positives, and integer wrap-around
 				// +ai
 				if (a[i] > 0) {
@@ -155,6 +165,7 @@ public class ThreeIntSumFinder {
 						}
 					}
 				}
+				*/
 				
 				// large numbers taken care of
 				// onto actual algorithm
@@ -177,9 +188,15 @@ public class ThreeIntSumFinder {
 	 * Find integers that can make up the sides of a right triangle
 	 * Square all numbers in array
 	 */
-	public static int[] findPythagoreanTriplet(int[] a) {
-		for (int i = 0; i < a.length; i++)
+	public static int[] findPythagoreanTriplet(int[] b) {
+		int[] a = Arrays.copyOf(b, b.length);
+		
+		int maxRoot = (int) Math.sqrt(Integer.MAX_VALUE);
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] > maxRoot)
+				throwException();
 			a[i] *= a[i];
+		}
 		
 		int[] out = null;
 		for (int i = a.length-1; i > 1; i--) {
@@ -207,7 +224,8 @@ public class ThreeIntSumFinder {
 	}
 	
 	public static void main(String[] args) {
-		int[] a = {1,4,3,4,6,3,5,9,10};
+		
+		int[] a = {1,3,4,3,5,9,10,16,25,20,15};
 		//findThreeAddends(a, 14);
 		findPythagoreanTriplet(a);
 	}

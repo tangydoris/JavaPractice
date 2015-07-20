@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 public class TwoIntSumFinder {
 	
 	/*
+	 * #2
 	 * Given an array of integers & an integer find two numbers
 	 * in the array such that they add up to the given integer.
 	 * 

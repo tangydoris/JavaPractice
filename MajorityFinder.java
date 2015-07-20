@@ -1,14 +1,22 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+
+import com.sun.istack.internal.logging.Logger;
 
 public class MajorityFinder {
 	
 	/*
+	 * #5
 	 * Given an array of size n, find the majority element.
 	 * The majority element is the element that appears more than ⌊ n/2 ⌋ times. 
 	 * (assume that the array is non-empty and the majority element always exist in the array.)
 	 */
 	
 	/*
-	 * Method one:
+	 * Method 1:
 	 * Keep HashMap (because HashTable is synchronized and is slower)
 	 * 	where key is integer in array and value is its frequency
 	 * Return the key from hashmap occurs whose value is greater than n/2
@@ -16,7 +24,7 @@ public class MajorityFinder {
 	 */
 	
 	/*
-	 * Method two:
+	 * Method 2:
 	 * Sort array
 	 * Iterate through array and keep count of the frequency of the current integer
 	 * When frequency reaches n/2, return the current integer
@@ -24,7 +32,7 @@ public class MajorityFinder {
 	 */
 	
 	/*
-	 * Method three:
+	 * Method 3:
 	 * The majority element must be one away from or at the midpoint of the sorted array
 	 * Sort array
 	 * Inspect the integer at index floor of n/2
@@ -34,7 +42,130 @@ public class MajorityFinder {
 	 * 		if they arent, there is no majority element
 	 */
 	
-	public static void main(String[] args) {
+	/*
+	 * Method 4:
+	 * Median of medians (research) O(n):
+	 * find median, iterate through array to check frequency of median
+	 * if there are two medians then there is no majority anyway
+	 */
+	
+	/*
+	 * Method 5:
+	 * Moore's Voting Algorithm
+	 * keep counts of majority index and count
+	 * WRITE PERFECT CODE FOR THIS
+	 * O(n)
+	 */
+	
+	/*
+	 * Method 6:
+	 * probability (randomized)
+	 * Choosing an eleent at random, we have a 50% chance of getting it right
+	 * (if there does exist a majority element).
+	 * Should we take in the probability that there is no majority element?
+	 * (does this even matter?)
+	 * We assume that there is always a majority element in the array
+	 * 
+	 * WRITE CODE
+	 * O(n)
+	 */
+	
+	// FOUR MORE METHODS THAT REQUIRE OUT OF THE BOX THINKING
+	
+	/*
+	 * 
+	 */
+	
+	//static Logger logger = Logger.getLogger("MajorityFinder.class");
+	
+	public static int probabilityMethod(int[] a, int tries) {
+		// We do not use this way of calculating probability because
+		// of possible overflow
+		//double probability = 1/(Math.pow(2, tries);
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		double probability = 1d;
 		
+		for (int i = 0; i < tries; i++) {
+			Random random = new Random();
+			int index = (int) (random.nextInt(a.length));
+			int elem = a[index];
+			if (map.containsKey(elem)) {
+				map.put(elem, map.get(elem)+1);
+			}
+			else
+				map.put(elem, 1);
+			
+			probability /= 2;
+		}
+		probability = 100*(1d - probability);
+		
+		Iterator<Entry<Integer, Integer>> iter = map.entrySet().iterator();
+		Entry<Integer,Integer> entry = iter.next();
+		int majority = entry.getKey();
+		int count = entry.getValue();
+		while (iter.hasNext()) {
+			entry = iter.next();
+			if (entry.getValue() > count) {
+				count = entry.getValue();
+				majority = entry.getKey();
+			}
+		}
+		
+		System.out.println("The majority element is "+majority+" with "+probability+"% chance of"
+				+ " being correct");
+		return majority;
+	}
+	
+	public static int mooresAlgorithm(int[] a) {
+		int majIndex = 0;
+		int count = 0;
+		
+		// iterate through array to find possible majority
+		for (int i = 1; i < a.length; i++) {
+			count++;
+			if (a[i] != a[majIndex]) {
+				count--;
+				majIndex = i;
+			}
+			else
+				count++;
+				
+		}
+		
+		// scan array for correctness
+		int elementsNeeded = (int) Math.floor(a.length/2);
+		int elements = 0;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] == a[majIndex])
+				elements++;
+		}
+		
+		if (elements > elementsNeeded) {
+			System.out.println(a[majIndex]);
+			return a[majIndex];
+		}
+		// The following depends on the function of the application.
+		// One possible way to handle an array with no majority element is
+		// to throw an exception.
+		else {
+			//logger.severe("No majority element in array");
+			throw new NoMajorityException("No majority element in array");
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		int[] a = {1,6,3,6,6,3,4,6,6,6,1,3,6,6,6,6};
+		mooresAlgorithm(a);
+		probabilityMethod(a, 4);
+	}
+}
+
+class NoMajorityException extends RuntimeException {
+	public NoMajorityException() {
+		super();
+	}
+	public NoMajorityException(String msg) {
+		super(msg);
 	}
 }

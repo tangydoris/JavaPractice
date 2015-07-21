@@ -3,8 +3,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-
-import com.sun.istack.internal.logging.Logger;
+import java.util.logging.Logger;
 
 public class MajorityFinder {
 	
@@ -73,10 +72,11 @@ public class MajorityFinder {
 	// FOUR MORE METHODS THAT REQUIRE OUT OF THE BOX THINKING
 	
 	/*
+	 * Method 7:
 	 * 
 	 */
 	
-	//static Logger logger = Logger.getLogger("MajorityFinder.class");
+	static Logger logger = Logger.getLogger("MajorityFinder.class");
 	
 	public static int probabilityMethod(int[] a, int tries) {
 		// We do not use this way of calculating probability because
@@ -90,6 +90,10 @@ public class MajorityFinder {
 			int index = (int) (random.nextInt(a.length));
 			int elem = a[index];
 			if (map.containsKey(elem)) {
+				if (map.get(elem)+1 < 0) {
+					logger.severe("Maximum element count reached");
+					throw new LargeNumberException("Maximum element count reached");
+				}
 				map.put(elem, map.get(elem)+1);
 			}
 			else
@@ -127,8 +131,13 @@ public class MajorityFinder {
 				count--;
 				majIndex = i;
 			}
-			else
+			else {
+				if (count + 1 < 0) {
+					logger.severe("Maximum element count reached");
+					throw new LargeNumberException("Maximum element count reached");
+				}
 				count++;
+			}
 				
 		}
 		
@@ -148,16 +157,16 @@ public class MajorityFinder {
 		// One possible way to handle an array with no majority element is
 		// to throw an exception.
 		else {
-			//logger.severe("No majority element in array");
+			logger.severe("No majority element in array");
 			throw new NoMajorityException("No majority element in array");
 		}
 		
 	}
 	
 	public static void main(String[] args) {
-		int[] a = {1,6,3,6,6,3,4,6,6,6,1,3,6,6,6,6};
+		int[] a = {1,6,3,6,6,3,4,6,6,6,1,3,6,6,6,6,8,2,4,5,6,6,6,1,2,5,6,6,6};
 		mooresAlgorithm(a);
-		probabilityMethod(a, 4);
+		probabilityMethod(a, 10);
 	}
 }
 

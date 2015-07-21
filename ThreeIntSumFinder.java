@@ -50,15 +50,8 @@ public class ThreeIntSumFinder {
 		
 		int lasti = a.length-1;
 		for (int i = 0; i < lasti-1; i++) {
-			int ai = Math.abs(a[i]);
-			for (int j = i+1, k = lasti; j < k; ) {
-				int aj = Math.abs(a[j]);
-				int ak = Math.abs(a[k]);
-				
+			for (int j = i+1, k = lasti; j < k; ) {				
 				int sum = a[i]+a[j]+a[k];
-				int sumij = a[i] + a[j];
-				int sumik = a[i] + a[k];
-				int sumjk = a[j] + a[k];
 				
 				if (a[i]>0 && a[j]>0 && a[k]>0) {
 					if (sum < 0)

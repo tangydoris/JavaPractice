@@ -2,6 +2,16 @@ import java.util.logging.Logger;
 
 public class SpiralArray {
 	
+	/*
+	 * #8
+	 * Make a spiral 2d array given the length of each side
+	 * The number at the first index is 1
+	 * eg. input 3
+	 * 1 2 3
+	 * 8 9 4
+	 * 7 6 5
+	 */
+	
 	static Logger logger = Logger.getLogger("SpiralArray.class");
 	
 	public static int[][] makeSpiral(int length) {
@@ -22,31 +32,29 @@ public class SpiralArray {
 		while (iStart<=iEnd) {
 			int j=iStart, k=iStart;
 			for (int i=0; i<4; i++) {
+				
 				if(iStart==iEnd) {
 					out[j][k]=count;
 					break;
 				}
+				
 				switch (i) {
 					// go right
-					case 0:
-						while (k<iEnd)
-							out[j][k++]=count++;
-						break;
+					case 0:	while (k<iEnd)
+								out[j][k++]=count++;
+							break;
 					// go down
-					case 1:
-						while (j<iEnd)
-							out[j++][k]=count++;
-						break;
+					case 1:	while (j<iEnd)
+								out[j++][k]=count++;
+							break;
 					// go left
-					case 2:
-						while (k>iStart)
-							out[j][k--]=count++;
-						break;
+					case 2:	while (k>iStart)
+								out[j][k--]=count++;
+							break;
 					// go up
-					case 3:
-						while (j>iStart)
-							out[j--][k]=count++;
-						break;
+					case 3:	while (j>iStart)
+								out[j--][k]=count++;
+							break;
 				}
 			}
 			iStart++;

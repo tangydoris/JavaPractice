@@ -31,7 +31,7 @@ public class TwoIntSumFinder {
 				i++;
 			}
 			else if (tempSum > sum) {
-				// needs to be less, move right pointer
+					// needs to be less, move right pointer
 				j--;
 			}
 			else if (tempSum == sum) {

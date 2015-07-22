@@ -57,6 +57,25 @@ public class ObjectSorter {
 		if (a.length == 0 || a.length == 1)
 			return a;
 		
+		int low = 0, mid = 0, high = a.length-1, temp=0;
+		while(mid <= high) {
+			switch(a[mid]) {
+				case 0 	: 	temp = a[low];
+							a[low] = a[mid];
+							a[mid] = temp;
+							++low;
+							++mid;
+							break;
+				case 1	:	++mid;
+							break;
+				case 2	:	temp = a[mid];
+							a[mid] = a[high];
+							a[high] = temp;
+							--high;
+			}
+		}
+		
+		/*
 		for (int i = 0, j = 1, k = a.length-1; j <= k; ) {
 			if (a[i] == 0) {
 				i++;
@@ -82,6 +101,7 @@ public class ObjectSorter {
 			else j++;
 		}
 		
+		*/
 		// Print sorted array
 		for (int i = 0; i < a.length; i++)
 			System.out.print(a[i]+" ");	

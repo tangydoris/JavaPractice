@@ -120,6 +120,22 @@ public class MajorityFinder {
 		return majority;
 	}
 	
+	public static int mooreVoting(int[] a) {
+		int majIndex=0;
+		int count = 1;
+		for(int i=1;i<a.length;++i){
+			if(a[i]!=a[majIndex])
+				--count;
+			else 
+				++count;
+			if(count==0) {
+				count=1;
+				majIndex = i;
+			}
+		}
+		return majIndex;
+	}
+	
 	public static int mooresAlgorithm(int[] a) {
 		int majIndex = 0;
 		int count = 0;

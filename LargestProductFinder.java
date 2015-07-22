@@ -72,7 +72,7 @@ public class LargestProductFinder {
 	}
 
 	public static void main(String[] args) {
-		int[] a = {1,0,-7,-4,0,4,5,-2,3,1,5};
+		int[] a = {-655533232,-222222332};
 		findLargestProduct(a);
 	}
 

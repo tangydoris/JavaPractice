@@ -3,7 +3,7 @@ import java.util.logging.Logger;
 public class SpiralArray {
 	
 	/*
-	 * #8
+	 * #7
 	 * Make a spiral 2d array given the length of each side
 	 * The number at the first index is 1
 	 * eg. input 3
@@ -18,6 +18,11 @@ public class SpiralArray {
 		if (length>Math.sqrt(Integer.MAX_VALUE)) {
 			logger.severe("Input length is too large");
 			throw new LargeNumberException("Input length is too large");
+		}
+		
+		if (length<0) {
+			logger.severe("Illegal array size");
+			throw new IllegalArgumentException("Illegal array size");
 		}
 		
 		if (length==0) {
@@ -73,10 +78,13 @@ public class SpiralArray {
 	}
 
 	public static void main(String[] args) {
-		makeSpiral(1);
+		/*makeSpiral(1);
 		makeSpiral(2);
 		makeSpiral(3);
 		makeSpiral(4);
+		makeSpiral(7);*/
+		
+		makeSpiral(-20);
 	}
 
 }

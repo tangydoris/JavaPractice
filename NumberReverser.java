@@ -50,7 +50,12 @@ public class NumberReverser {
 	 * Convert integer into string where each character is
 	 * a digit in the integer, in their original left-to-right
 	 * order
-	 * Have a pointer at the last character in the string
+	 * Create an empty output string
+	 * Have a pointer to the last character in the string
+	 * Concatenate  this character with the output string
+	 * Decrement the pointer
+	 * Repeat until the pointer reaches the beginning of the
+	 * input string
 	 */
 
 	public static void main(String[] args) {

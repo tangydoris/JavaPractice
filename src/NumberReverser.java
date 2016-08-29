@@ -1,9 +1,12 @@
+package src;
+
+import src.exceptions.LargeNumberException;
+
 import java.util.logging.Logger;
 
 public class NumberReverser {
-	
+
 	/*
-	 * #8
 	 * Given a Number reverse the digit of that number
 	 * input: 34532 -> output 23543
 	 */
@@ -20,30 +23,32 @@ public class NumberReverser {
 	 * Repeat until x reaches (number of digits-1)
 	 * CODE THIS
 	 */
-	
-	static Logger logger = Logger.getLogger("NumberReverser.class");
-	
-	public static int reverseWithLoop(int a) {
-		boolean negative = a<0;
-		if (negative)
-			a*=-1;
-		
-		int sum = 0;
-		while (a>=1) {
-			sum = (sum*10) + (a%10);
-			if (sum<0) {
-				logger.severe("Largest supported integer reached");
-				throw new LargeNumberException("Largest supported integer reached");
-			}
-			a/=10;
-		}
-		
-		if (negative)
-			sum*=-1;
-		
-		System.out.println(sum);
-		return sum;
-	}
+
+    private static Logger log = Logger.getLogger("NumberReverser.class");
+
+    public static int reverseWithLoop(int a) {
+        boolean negative = a < 0;
+        if (negative) {
+            a *= -1;
+        }
+
+        int sum = 0;
+        while (a >= 1) {
+            sum = (sum * 10) + (a % 10);
+            if (sum < 0) {
+                log.severe("Largest supported integer reached");
+                throw new LargeNumberException("Largest supported integer reached");
+            }
+            a /= 10;
+        }
+
+        if (negative) {
+            sum *= -1;
+        }
+
+        System.out.println(sum);
+        return sum;
+    }
 	
 	/*
 	 * Method 2
@@ -58,9 +63,9 @@ public class NumberReverser {
 	 * input string
 	 */
 
-	public static void main(String[] args) {
-		int a = -23;
-		reverseWithLoop(a);
-	}
+    public static void main(String[] args) {
+        int a = -23;
+        reverseWithLoop(a);
+    }
 
 }

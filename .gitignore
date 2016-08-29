@@ -4,3 +4,4 @@ out.txt
 .project
 .classpath
 *.class
+*.iml
